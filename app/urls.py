@@ -1,7 +1,7 @@
 from re import template
 from sre_constants import SUCCESS
 from django.urls import path
-from app import views
+from . import views
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
@@ -9,7 +9,6 @@ from .forms import LoginForm, MyPasswordChangeForm, MyPasswordResetForm, MySetPa
 
 
 urlpatterns = [
-    # path('', views.home),
     path('', views.ProductView.as_view(), name='home'),
     path('product-detail/<int:pk>', views.ProductDetailView.as_view(), name='product-detail'),
     path('add-to-cart/', views.add_to_cart, name='add-to-cart'),
@@ -32,7 +31,7 @@ urlpatterns = [
     path('bottomwear/<slug:data>', views.bottomwear, name='bottomweardata'),
     path('checkout/', views.checkout, name='checkout'),
     path('paymentdone/', views.payment_done, name='paymentdone'),
-    path('account/login/', auth_views.LoginView.as_view(template_name='app/login.html',next_page='home', authentication_form=LoginForm),name='login'),
+    path('account/login/', auth_views.LoginView.as_view(),name='login'),
     path('logout/', auth_views.LogoutView.as_view(next_page='login'), name='logout'),
     path('passwordchange/',auth_views.PasswordChangeView.as_view(template_name= 'app/passwordchange.html', form_class=MyPasswordChangeForm, success_url='/passwordchangedone/'), name='passwordchange'),
     path('passwordchangedone/', auth_views.PasswordChangeView.as_view(template_name='app/passwordchangedone.html'), name='passwordchangedone'),
